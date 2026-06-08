@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 load_dotenv()
-
+print("===== DATABASE_URL:", os.getenv('DATABASE_URL', 'PAS TROUVE')) 
 from flask import send_from_directory
 from flask import Flask
 from config import Config
