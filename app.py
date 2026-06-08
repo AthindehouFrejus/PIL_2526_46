@@ -38,6 +38,9 @@ def create_app():
     app.register_blueprint(messaging_bp, url_prefix='/api/messages')
         # Route d'accueil
     @app.route('/')
+    @app.route('/login')
+    def login_page():
+        return send_from_directory('static', 'login.html')
     @app.route('/chat')
     def chat_test():
         return send_from_directory('static', 'chat.html')
@@ -49,4 +52,6 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    socketio.run(app, debug=True)
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    socketio.run(app, debug=False, host='0.0.0.0', port=port)
