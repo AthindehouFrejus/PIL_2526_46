@@ -3,7 +3,7 @@ services:
     name: mentorat-ifri-api
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:create_app() --worker-class eventlet -b 0.0.0.0:$PORT
+    startCommand: gunicorn wsgi:app --worker-class eventlet -b 0.0.0.0:$PORT
     envVars:
       - key: SECRET_KEY
         generateValue: true
