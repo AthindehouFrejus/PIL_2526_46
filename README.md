@@ -28,10 +28,10 @@ Application web de mise en relation entre mentors et mentorés pour l'IFRI.
 8. Lancer : `python app.py`
 
 ## Équipe
-ATHINDEHOU Oluwa-Tobi Amos Fréjus
-KPADONOU Horeb Immaculée La joie
-AMEHO Fifamè Grâce
-AZONHOUMON Adrien
-DAMADO Gloria
-OKE Sourou Julie Hilary
-HANTO Jordy Mayel
+- ATHINDEHOU Oluwa-Tobi Amos Fréjus
+- KPADONOU Horeb Immaculée La joie
+- AMEHO Fifamè Grâce
+- AZONHOUMON Adrien
+- DAMADO Gloria
+- OKE Sourou Julie Hilary
+- HANTO Jordy Mayel
