@@ -2,21 +2,13 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 
-print("===== DATABASE_URL:", os.getenv('DATABASE_URL', 'PAS TROUVE')) 
-
-from flask import send_from_directory
-from flask import Flask
+from flask import Flask, send_from_directory
 from config import Config
 from extensions import db, migrate, bcrypt, jwt, socketio, cors, mail
-import os
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
-
-    # Charger les variables d'environnement depuis .env
-    from dotenv import load_dotenv
-    load_dotenv()
 
     # Initialiser les extensions
     db.init_app(app)
@@ -26,6 +18,12 @@ def create_app():
     cors.init_app(app)
     socketio.init_app(app)
     mail.init_app(app)
+
+    # Importer les modèles pour Flask-Migrate
+    from models.user import User
+    from models.profile import Profile
+    from models.mentorship import MentorshipOffer, MentorshipRequest
+    from models.message import Conversation, Message, ConversationParticipants
 
     # Importer et enregistrer les blueprints
     from routes.auth import auth_bp
@@ -39,28 +37,32 @@ def create_app():
     app.register_blueprint(mentorship_bp, url_prefix='/api/mentorship')
     app.register_blueprint(matching_bp, url_prefix='/api/matching')
     app.register_blueprint(messaging_bp, url_prefix='/api/messages')
-        # Route d'accueil
+
+    # Route d'accueil
     @app.route('/')
+    def home():
+        return {'message': 'API Mentorat IFRI en ligne !'}
+
+    # Routes pour les pages HTML
     @app.route('/login')
     def login_page():
         return send_from_directory('static', 'login.html')
-    @app.route('/chat')
+
     @app.route('/register')
-    @app.route('/static/<path:filename>')
-    def static_files(filename):
-        return send_from_directory('static', filename)
     def register_page():
         return send_from_directory('static', 'register.html')
+
+    @app.route('/chat')
     def chat_test():
         return send_from_directory('static', 'chat.html')
 
-    def home():
-        return {'message': 'API Mentorat en ligne !'}
+    @app.route('/static/<path:filename>')
+    def static_files(filename):
+        return send_from_directory('static', filename)
 
     return app
 
 if __name__ == '__main__':
     app = create_app()
-    import os
     port = int(os.environ.get('PORT', 5000))
     socketio.run(app, debug=False, host='0.0.0.0', port=port)
