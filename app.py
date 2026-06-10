@@ -46,6 +46,9 @@ def create_app():
         return send_from_directory('static', 'login.html')
     @app.route('/chat')
     @app.route('/register')
+    @app.route('/static/<path:filename>')
+    def static_files(filename):
+        return send_from_directory('static', filename)
     def register_page():
         return send_from_directory('static', 'register.html')
     def chat_test():
