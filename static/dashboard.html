@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - IFRI MentorLink</title>
+    <link rel="stylesheet" href="/static/CSS/style.css">
+    <link rel="stylesheet" href="/static/CSS/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Inline&family=Bungee+Shade&family=Biryani:wght@300;400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <a href="/dashboard">
+                <span class="brand-icon">M</span>
+                <span class="brand-text">IFRI_<strong>MentorLink</strong></span>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="/dashboard" class="active">ACCUEIL</a>
+            <a href="/mentors">Trouver un mentor</a>
+            <a href="/offers">Poster une offre</a>
+            <a href="/requests">Poster une demande</a>
+            <a href="/chat">Discussions</a>
+        </div>
+        <div class="nav-profile">
+            <a href="/profile" class="profile-btn">
+                <div class="profile-avatar"></div>
+                <span>Profil</span>
+            </a>
+            <a href="#" onclick="logout()" class="logout-btn">Déconnexion</a>
+        </div>
+    </nav>
+
+    <!-- ===== CONTENU PRINCIPAL ===== -->
+    <div class="dashboard-container">
+        
+        <!-- Message de bienvenue -->
+        <div class="welcome-section">
+            <h1 class="welcome-title">Bonjour, <span id="userName">...</span> !</h1>
+            <p class="welcome-sub">Voici vos suggestions de matching</p>
+        </div>
+
+        <!-- Compteurs -->
+        <div class="stats-section" id="statsSection">
+            <div class="stat-card" onclick="window.location.href='/offers'">
+                <div class="stat-number" id="statOffers">0</div>
+                <div class="stat-label">Offres</div>
+                <div class="stat-sub">vers mentorés</div>
+            </div>
+            <div class="stat-card" onclick="window.location.href='/requests'">
+                <div class="stat-number" id="statRequests">0</div>
+                <div class="stat-label">Demandes</div>
+                <div class="stat-sub">vers mentors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statPending">0</div>
+                <div class="stat-label">En cours</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statAccepted">0</div>
+                <div class="stat-label">Acceptées</div>
+            </div>
+        </div>
+        <p class="stats-hint">Cliquez sur les nombres pour voir</p>
+
+        <!-- Suggestions de matching -->
+        <div class="suggestions-section">
+            <h2>Suggestions pour vous</h2>
+            <div class="suggestions-grid" id="suggestionsGrid">
+                <p class="loading-text">Chargement des suggestions...</p>
+            </div>
+        </div>
+
+        <!-- Actions rapides -->
+        <div class="quick-actions">
+            <a href="/offers" class="action-card">
+                <i class="fa fa-bullhorn"></i>
+                <span>Publier une offre</span>
+            </a>
+            <a href="/requests" class="action-card">
+                <i class="fa fa-hand-paper"></i>
+                <span>Faire une demande</span>
+            </a>
+            <a href="/profile" class="action-card">
+                <i class="fa fa-user-edit"></i>
+                <span>Modifier mon profil</span>
+            </a>
+            <a href="/chat" class="action-card">
+                <i class="fa fa-comments"></i>
+                <span>Messagerie</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>En savoir plus</h4>
+                <a href="#">Qui sommes-nous ?</a>
+                <a href="#">Notre mission</a>
+                <a href="#">Comment ça marche ?</a>
+                <a href="#">Pourquoi nous rejoindre ?</a>
+            </div>
+            <div class="footer-col footer-center">
+                <h4>IFRI_MENTORLINK by IFRI</h4>
+                <p>INSTITUT DE RECHERCHE ET DE FORMATION EN INFORMATIQUE</p>
+                <p>UNIVERSITÉ D'ABOMEY-CALAVI</p>
+            </div>
+            <div class="footer-col footer-right">
+                <h4>contactez-nous !</h4>
+                <a href="#">ifri.mentorlink@gmail.com</a>
+                <a href="#">Facebook</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Instagram</a>
+                <a href="#">Whatsapp</a>
+                <span>Disponible 24H/24</span>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Copyright © IFRI 2025-2026, Bénin</p>
+        </div>
+    </footer>
+
+    <script>
+        const API_URL = 'https://web-production-903ce.up.railway.app';
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('user_id');
+
+        if (!token) {
+            window.location.href = '/login';
+        }
+
+        // Charger le profil
+        async function loadDashboard() {
+            try {
+                const response = await fetch(API_URL + '/api/profile', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById('userName').textContent = data.first_name || 'Utilisateur';
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // Charger les suggestions
+        async function loadSuggestions() {
+            try {
+                const response = await fetch(API_URL + '/api/matching/suggestions', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await response.json();
+                const grid = document.getElementById('suggestionsGrid');
+
+                if (data.length === 0) {
+                    grid.innerHTML = '<p class="empty-text">Aucune suggestion pour le moment. Complétez votre profil pour en recevoir !</p>';
+                    return;
+                }
+
+                grid.innerHTML = data.map(user => `
+                    <div class="suggestion-card">
+                        <div class="sugg-photo">
+                            ${user.photo_url ? `<img src="${API_URL}${user.photo_url}" alt="${user.name}">` : '<i class="fa fa-user"></i>'}
+                        </div>
+                        <div class="sugg-info">
+                            <h3>${user.name}</h3>
+                            <div class="sugg-tags">
+                                ${(user.competences_communes || []).map(c => `<span class="tag">${c}</span>`).join('')}
+                            </div>
+                            <div class="sugg-score">Score : ${user.score}%</div>
+                        </div>
+                        <button class="btn-contact" onclick="contactUser(${user.user_id})">Contacter</button>
+                    </div>
+                `).join('');
+            } catch (e) {
+                document.getElementById('suggestionsGrid').innerHTML = '<p class="error-text">Erreur de chargement.</p>';
+            }
+        }
+
+        // Contacter un utilisateur
+        async function contactUser(otherId) {
+            try {
+                const response = await fetch(API_URL + '/api/messages/conversations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({ user_id: otherId })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    window.location.href = '/chat';
+                }
+            } catch (e) {
+                alert('Erreur');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user_id');
+            window.location.href = '/login';
+        }
+
+        loadDashboard();
+        loadSuggestions();
+    </script>
+
+</body>
+</html>

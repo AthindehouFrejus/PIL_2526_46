@@ -63,8 +63,11 @@ def create_app():
     @app.route('/profile')
     def profile_page():
         return send_from_directory('static', 'profile.html')
+    @app.route('/dashboard')
+    def dashboard_page():
+        return send_from_directory('static', 'dashboard.html')
     
-    return app
+        return app
 
 if __name__ == '__main__':
     app = create_app()
