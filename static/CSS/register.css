@@ -1,0 +1,14 @@
+/* Styles spécifiques à l'inscription */
+.auth-form-wrap.wide {
+    max-width: 620px;
+}
+
+@media (max-width: 768px) {
+    .reg-steps {
+        gap: 5px;
+    }
+    .reg-step-line {
+        width: 25px;
+    }
+}
+

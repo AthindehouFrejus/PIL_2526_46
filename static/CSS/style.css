@@ -1,0 +1,433 @@
+/* ===== RESET & BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Biryani', sans-serif;
+    background: #f0f4f8;
+    color: #03162C;
+}
+
+/* ===== AUTH SPLIT LAYOUT ===== */
+.auth-split {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===== LEFT PANEL ===== */
+.auth-left {
+    width: 40%;
+    background: linear-gradient(180deg, #0A4992 0%, #03162C 100%);
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-brand {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-family: 'Bungee', sans-serif;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+}
+
+.brand-icon {
+    background: #5B9EF4;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.auth-visual {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.av-card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.av-orb {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(91,158,244,0.3);
+}
+
+.av-o1 {
+    width: 100px;
+    height: 100px;
+    top: -30px;
+    right: -30px;
+}
+
+.av-o2 {
+    width: 60px;
+    height: 60px;
+    bottom: -20px;
+    left: -20px;
+}
+
+.av-steps-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.avsp {
+    color: rgba(255,255,255,0.5);
+    font-family: 'Bungee', sans-serif;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avsp.active {
+    color: #FFFFFF;
+}
+
+.avsp i {
+    width: 20px;
+}
+
+.av-note {
+    color: rgba(255,255,255,0.7);
+    font-size: 14px;
+}
+
+/* ===== RIGHT PANEL ===== */
+.auth-right {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: #FFFFFF;
+}
+
+.auth-form-wrap {
+    width: 100%;
+    max-width: 520px;
+}
+
+.auth-form-wrap.wide {
+    max-width: 580px;
+}
+
+.auth-title {
+    font-family: 'Bungee Inline', sans-serif;
+    font-size: 28px;
+    color: #03162C;
+    margin-bottom: 5px;
+}
+
+.auth-sub {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* ===== FORM ELEMENTS ===== */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Bungee', sans-serif;
+    font-size: 12px;
+    color: #0A4992;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-input {
+    width: 100%;
+    height: 45px;
+    border: 2px solid #e0e5ec;
+    border-radius: 10px;
+    padding: 0 15px;
+    font-family: 'Biryani', sans-serif;
+    font-size: 14px;
+    color: #03162C;
+    background: #f8fafc;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #5B9EF4;
+    background: #FFFFFF;
+}
+
+textarea.form-input {
+    height: auto;
+    padding: 12px 15px;
+    resize: vertical;
+}
+
+select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230A4992' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+    background: linear-gradient(90deg, #0A4992 0%, #03162C 100%);
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-family: 'Bungee', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(10,73,146,0.3);
+}
+
+.btn-primary.full {
+    width: 100%;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #0A4992;
+    border: 2px solid #0A4992;
+    padding: 10px 25px;
+    border-radius: 10px;
+    font-family: 'Bungee', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* ===== REGISTRATION STEPS ===== */
+.reg-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 25px;
+}
+
+.reg-step {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #e0e5ec;
+    color: #999;
+    font-family: 'Bungee', sans-serif;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.reg-step.active {
+    background: linear-gradient(135deg, #0A4992, #5B9EF4);
+    color: #FFFFFF;
+}
+
+.reg-step-line {
+    width: 40px;
+    height: 2px;
+    background: #e0e5ec;
+}
+
+.reg-panel {
+    display: none;
+}
+
+.reg-panel.active {
+    display: block;
+}
+
+.step-label {
+    font-family: 'Bungee', sans-serif;
+    font-size: 14px;
+    color: #0A4992;
+    margin-bottom: 15px;
+}
+
+/* ===== BADGES / TAGS ===== */
+.badges-input {
+    border: 2px solid #e0e5ec;
+    border-radius: 10px;
+    padding: 8px;
+    background: #f8fafc;
+    min-height: 45px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.badges-input:focus-within {
+    border-color: #5B9EF4;
+}
+
+.badges-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.badge-tag {
+    background: linear-gradient(135deg, #5B9EF4, #0A4992);
+    color: #FFFFFF;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-family: 'Biryani', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.badge-tag .remove-tag {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.badges-input input {
+    border: none;
+    outline: none;
+    flex: 1;
+    min-width: 100px;
+    font-family: 'Biryani', sans-serif;
+    font-size: 14px;
+    background: transparent;
+}
+
+/* ===== PASSWORD EYE ===== */
+.input-eye {
+    position: relative;
+}
+
+.input-eye .form-input {
+    padding-right: 45px;
+}
+
+.eye-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+}
+
+/* ===== DISPO GRID ===== */
+.dispo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.dispo-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+}
+
+/* ===== MESSAGES ===== */
+.form-msg {
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.form-msg.error {
+    background: #ffeaea;
+    color: #c0392b;
+    border: 1px solid #e74c3c;
+}
+
+.form-msg.success {
+    background: #e8f8f0;
+    color: #27ae60;
+    border: 1px solid #2ecc71;
+}
+
+/* ===== AUTH SWITCH ===== */
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.auth-switch a {
+    color: #0A4992;
+    font-family: 'Bungee', sans-serif;
+    text-decoration: none;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .auth-split {
+        flex-direction: column;
+    }
+    .auth-left {
+        width: 100%;
+        min-height: 200px;
+        padding: 30px;
+    }
+    .auth-right {
+        width: 100%;
+        padding: 30px 20px;
+    }
+    .form-row {
+        flex-direction: column;
+    }
+}

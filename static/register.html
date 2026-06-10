@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inscription — IFRI_MentorLink</title>
+ <link rel="stylesheet" href="CSS/style.css"/>
+  <link rel="stylesheet" href="CSS/register.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Inline&family=Biryani:wght@300;400;700;900&display=swap" rel="stylesheet"/>
+</head>
+<body class="auth-page">
+
+<div class="auth-split">
+  <div class="auth-left">
+    <a href="index.html" class="auth-brand">
+      <span class="brand-icon">M</span>
+      <span>IFRI_<strong>MentorLink</strong></span>
+    </a>
+    <div class="auth-visual">
+      <div class="av-card">
+        <div class="av-orb av-o1"></div>
+        <div class="av-orb av-o2"></div>
+        <div class="av-steps-preview">
+          <div class="avsp active"><i class="fa fa-user"></i> Profil</div>
+          <div class="avsp"><i class="fa fa-bullseye"></i> Compétences</div>
+          <div class="avsp"><i class="fa fa-calendar"></i> Disponibilités</div>
+        </div>
+        <p class="av-note">Rejoins des centaines d'étudiants IFRI qui s'entraident.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-form-wrap wide">
+      <h2 class="auth-title">Crée ton compte</h2>
+      <p class="auth-sub">Rejoins la communauté de mentorat de l'IFRI.</p>
+
+      <!-- STEP INDICATORS -->
+      <div class="reg-steps">
+        <div class="reg-step active" id="step-dot-1">1</div>
+        <div class="reg-step-line"></div>
+        <div class="reg-step" id="step-dot-2">2</div>
+        <div class="reg-step-line"></div>
+        <div class="reg-step" id="step-dot-3">3</div>
+      </div>
+
+      <div class="form-msg" id="regMsg" style="display:none;"></div>
+
+      <!-- STEP 1 -->
+      <div class="reg-panel active" id="reg-step-1">
+        <h4 class="step-label">Informations personnelles</h4>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" id="reg-prenom" placeholder="Kokou" class="form-input"/>
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" id="reg-nom" placeholder="Mensah" class="form-input"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Adresse e-mail</label>
+          <input type="email" id="reg-email" placeholder="kokou@ifri.uac.bj" class="form-input"/>
+        </div>
+        <div class="form-group">
+          <label>Numéro de téléphone</label>
+          <input type="tel" id="reg-tel" placeholder="+229 97 00 00 00" class="form-input"/>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Filière</label>
+            <select id="reg-filiere" class="form-input">
+              <option value="">Choisir</option>
+              <option>IA</option>
+              <option>GL</option>
+              <option>SI</option>
+              <option>SE&IoT</option>
+              <option>IM</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Niveau</label>
+            <select id="reg-niveau" class="form-input">
+              <option value="">Choisir</option>
+              <option>L1</option>
+              <option>L2</option>
+              <option>L3</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-primary full" onclick="nextStep(2)">Continuer →</button>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="reg-panel" id="reg-step-2">
+        <h4 class="step-label">Compétences & lacunes</h4>
+        <div class="form-group">
+          <label>Points forts (matières maîtrisées)</label>
+          <div class="badges-input" id="strengths-input">
+            <div class="badges-list" id="strengths-tags"></div>
+            <input type="text" placeholder="ex: Python, SQL…" id="strengths-field" onkeydown="addTag(event,'strengths')"/>
+          </div>
+          <small>Appuie sur Entrée pour ajouter</small>
+        </div>
+        <div class="form-group">
+          <label>Points faibles (où tu as besoin d'aide)</label>
+          <div class="badges-input" id="weaknesses-input">
+            <div class="badges-list" id="weaknesses-tags"></div>
+            <input type="text" placeholder="ex: Algo, Réseaux…" id="weaknesses-field" onkeydown="addTag(event,'weaknesses')"/>
+          </div>
+          <small>Appuie sur Entrée pour ajouter</small>
+        </div>
+        <div class="form-group">
+          <label>Bio courte (optionnel)</label>
+          <textarea id="reg-bio" class="form-input" rows="3" placeholder="Présente-toi en quelques mots…"></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn-ghost" onclick="prevStep(1)">← Retour</button>
+          <button class="btn-primary" onclick="nextStep(3)">Continuer →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="reg-panel" id="reg-step-3">
+        <h4 class="step-label">Sécurité & disponibilités</h4>
+        <div class="form-group">
+          <label>Mot de passe</label>
+          <div class="input-eye">
+            <input type="password" id="reg-pwd" placeholder="••••••••" class="form-input"/>
+            <button type="button" class="eye-btn" onclick="togglePwd('reg-pwd',this)"><i class="fa fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Confirmer le mot de passe</label>
+          <div class="input-eye">
+            <input type="password" id="reg-pwd2" placeholder="••••••••" class="form-input"/>
+            <button type="button" class="eye-btn" onclick="togglePwd('reg-pwd2',this)"><i class="fa fa-eye"></i></button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Disponibilités habituelles</label>
+          <div class="dispo-grid">
+            <label class="dispo-item"><input type="checkbox" value="Matin semaine"/> Matin (semaine)</label>
+            <label class="dispo-item"><input type="checkbox" value="Après-midi semaine"/> Après-midi (semaine)</label>
+            <label class="dispo-item"><input type="checkbox" value="Soir semaine"/> Soir (semaine)</label>
+            <label class="dispo-item"><input type="checkbox" value="Week-end"/> Week-end</label>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-ghost" onclick="prevStep(2)">← Retour</button>
+          <button class="btn-primary" onclick="handleRegister()">Créer mon compte</button>
+        </div>
+      </div>
+
+      <p class="auth-switch">Déjà inscrit ? <a href="login.html">Se connecter</a></p>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
