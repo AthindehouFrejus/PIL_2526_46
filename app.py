@@ -59,7 +59,11 @@ def create_app():
     @app.route('/static/<path:filename>')
     def static_files(filename):
         return send_from_directory('static', filename)
-
+    
+    @app.route('/profile')
+    def profile_page():
+        return send_from_directory('static', 'profile.html')
+    
     return app
 
 if __name__ == '__main__':
