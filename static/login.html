@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - IFRI MentorLink</title>
+    <link rel="stylesheet" href="/static/CSS/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Inline&family=Biryani:wght@300;400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+
+<div class="auth-split">
+    <div class="auth-left">
+        <a href="/" class="auth-brand">
+            <span class="brand-icon">M</span>
+            <span>IFRI_<strong>MentorLink</strong></span>
+        </a>
+        <div class="auth-visual">
+            <div class="av-card">
+                <div class="av-orb av-o1"></div>
+                <div class="av-orb av-o2"></div>
+                <p style="color:#fff; font-family:'Bungee Inline'; font-size:20px;">Bon retour !</p>
+                <p class="av-note">Connecte-toi pour retrouver tes mentors et mentorés.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <div class="auth-form-wrap">
+            <h2 class="auth-title">CONNECTEZ-VOUS</h2>
+            <p class="auth-sub">Bon retour parmi nous !</p>
+
+            <div class="form-msg" id="loginMsg" style="display:none;"></div>
+
+            <div class="form-group">
+                <label>Email ou téléphone</label>
+                <input type="text" id="login-identifier" placeholder="alice@ifri.edu" class="form-input">
+            </div>
+
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <div class="input-eye">
+                    <input type="password" id="login-password" placeholder="••••••••" class="form-input">
+                    <button type="button" class="eye-btn" onclick="togglePwd('login-password',this)"><i class="fa fa-eye"></i></button>
+                </div>
+            </div>
+
+            <button class="btn-primary full" onclick="handleLogin()">Se connecter</button>
+
+            <div class="links" style="text-align:center; margin-top:20px;">
+                <a href="/register" style="color:#0A4992; text-decoration:none; display:block; margin-bottom:8px;">Nouveau ici ? Créez un compte !</a>
+                <a href="/forgot-password" style="color:#666; text-decoration:none; font-size:13px;">J'ai oublié mon mot de passe</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const API_URL = 'https://web-production-903ce.up.railway.app';
+
+function showMsg(text, type) {
+    const msg = document.getElementById('loginMsg');
+    msg.textContent = text;
+    msg.className = 'form-msg ' + type;
+    msg.style.display = 'block';
+}
+
+function togglePwd(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+
+async function handleLogin() {
+    const identifier = document.getElementById('login-identifier').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    if (!identifier || !password) {
+        showMsg('Veuillez remplir tous les champs.', 'error');
+        return;
+    }
+
+    try {
+        const response = await fetch(API_URL + '/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ identifier, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user_id', data.user_id);
+            showMsg('Connexion réussie ! Redirection...', 'success');
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 1000);
+        } else {
+            showMsg(data.error || 'Identifiants incorrects.', 'error');
+        }
+    } catch (error) {
+        showMsg('Erreur de connexion au serveur.', 'error');
+    }
+}
+</script>
+
+</body>
+</html>
